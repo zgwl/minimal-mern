@@ -8,13 +8,13 @@
 npm init -y
 ```
 
-### Build the Docker Image
+### Build the Backend Docker Image
 
 ```shell
 docker build -t my-nodejs-app .
 ```
 
-### Run the Docker Container
+### Run the Backend Docker Container
 
 ```shell
 docker run -d -p 5050:5050 my-nodejs-app
@@ -27,4 +27,16 @@ docker run -d -p 5050:5050 my-nodejs-app
 ```shell
 npx create-react-app frontend --template typescript
 
+```
+
+### Build the Frontend Docker Image
+
+```shell
+docker build -t my-react-app .
+```
+
+### Run the Frontend Docker Container
+
+```shell
+docker run -d -p 8080:80 my-react-app
 ```
