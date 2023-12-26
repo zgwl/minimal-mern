@@ -1,7 +1,10 @@
+import cors from "cors";
 import express from "express";
 
 const app = express();
 const port = 5050;
+
+app.use(cors());
 
 app.get("/", (_req, res) => {
   res.send("Hello, World!");
