@@ -40,3 +40,9 @@ docker build -t my-react-app .
 ```shell
 docker run -d -p 8080:80 my-react-app
 ```
+
+## Docker Compose
+
+```shell
+docker-compose up --build
+```
