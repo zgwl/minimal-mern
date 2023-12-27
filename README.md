@@ -46,3 +46,23 @@ docker run -d -p 8080:80 my-react-app
 ```shell
 docker-compose up --build
 ```
+
+## Setup CI
+
+### Docker Registry Setup
+
+Go to [Docker Hub](https://hub.docker.com/) to signup and create a new repository.
+
+Generate an Access Token:
+
+- Log in to Docker Hub.
+- Go to [Security](https://hub.docker.com/settings/security) to create new Access Token.
+- Copy the generated token for the next step.
+
+### Github Repo Setup
+
+- Go to Github Repository
+- Click **Settings** -> **Secrets** -> **Actions**
+- Add two secrets:
+  - DOCKERHUB_USERNAME: The Docker Hub username
+  - DOCKERHUB_ACCESS_TOKEN: The created access token from previous step
