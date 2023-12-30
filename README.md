@@ -63,5 +63,3 @@ docker-compose up --build
 - Add two secrets under **Repository secrets**:
   - DOCKERHUB_USERNAME: The Docker Hub username
   - DOCKERHUB_ACCESS_TOKEN: The created access token from previous step
-
-This is a code review Pull Request.

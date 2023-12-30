@@ -7,7 +7,7 @@ const port = 5050;
 app.use(cors());
 
 app.get("/", (_req, res) => {
-  res.send("Hello, World!");
+  res.send("Hello, World Wally!");
 });
 
 const server = app.listen(port, () => {
