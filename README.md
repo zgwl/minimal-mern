@@ -51,10 +51,7 @@ docker-compose up --build
 
 ### Docker Registry Setup
 
-Go to [Docker Hub](https://hub.docker.com/) to signup and create a new repository.
-
-Generate an Access Token:
-
+- Go to [Docker Hub](https://hub.docker.com/) to signup.
 - Log in to Docker Hub.
 - Go to [Security](https://hub.docker.com/settings/security) to create new Access Token.
 - Copy the generated token for the next step.
@@ -63,6 +60,6 @@ Generate an Access Token:
 
 - Go to Github Repository
 - Click **Settings** -> **Secrets** -> **Actions**
-- Add two secrets:
+- Add two secrets under **Repository secrets**:
   - DOCKERHUB_USERNAME: The Docker Hub username
   - DOCKERHUB_ACCESS_TOKEN: The created access token from previous step
