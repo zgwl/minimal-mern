@@ -9,6 +9,6 @@ describe("GET /", () => {
   it("responds with a text message", async () => {
     const response = await request(server).get("/");
     expect(response.status).toBe(200);
-    expect(response.text).toEqual("Hello, World!");
+    expect(response.text).toEqual("Hello, Wally!");
   });
 });
