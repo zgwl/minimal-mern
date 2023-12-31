@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 
 app.get("/", (_req, res) => {
-  res.send(`Hello, World! Current environment: ${env}`);
+  res.send(`Hello, Wally! Current environment: ${env}`);
 });
 
 // Export the Express app for testing

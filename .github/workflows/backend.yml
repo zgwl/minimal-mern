@@ -31,7 +31,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: "us-east-2"
+          aws-region: "us-west-2"
 
       - name: Package Application
         run: |
@@ -40,4 +40,4 @@ jobs:
 
       - name: Deploy to AWS Lambda
         run: |
-          aws lambda update-function-code --function-name minimal-mern --zip-file fileb://backend.zip
+          aws lambda update-function-code --function-name minimal-mern-lambda-function --zip-file fileb://backend.zip
