@@ -21,19 +21,23 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: "16.x"
+          node-version: "20.x"
       - run: cd backend && npm install
       - run: cd backend && npm test
       - run: cd backend && npm run build
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
+      - name: Configure AWS
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: "us-east-2"
 
-      - name: Build and Push Docker Image for Backend
+      - name: Package Application
         run: |
           cd backend
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/backend-app:${{ github.sha }} .
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/backend-app:${{ github.sha }}
+          zip -r ../backend.zip .
+
+      - name: Deploy to AWS Lambda
+        run: |
+          aws lambda update-function-code --function-name minimal-mern --zip-file fileb://backend.zip

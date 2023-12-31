@@ -1,19 +1,31 @@
 import cors from "cors";
 import express from "express";
+import serverless from "serverless-http";
 
 const env = process.env.NODE_ENV || "development";
 
 const app = express();
-const port = 5050;
-
 app.use(cors());
 
 app.get("/", (_req, res) => {
   res.send(`Hello, World! Current environment: ${env}`);
 });
 
-const server = app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// Export the Express app for testing
+export { app };
 
-export default server;
+// Export the handler for the Serverless Lambda function
+export const handler = serverless(app);
+
+export const startServer = () => {
+  if (!process.env.LAMBDA_TASK_ROOT) {
+    const port = 5050;
+    app.listen(port, () => {
+      console.log(`Server running on port ${port}`);
+    });
+  }
+};
+
+if (require.main === module) {
+  startServer();
+}
