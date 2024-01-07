@@ -49,16 +49,6 @@ docker-compose up --build
 
 ## Setup CI/CD
 
-### Docker Registry Setup
-
-- Go to [Docker Hub](https://hub.docker.com/) to signup.
-
-- Log in to Docker Hub.
-
-- Go to [Security](https://hub.docker.com/settings/security) to create new Access Token.
-
-- Copy the generated token for the next step.
-
 ### AWS Access Key Setup
 
 - Signup for AWS if you don't have an account.
@@ -72,6 +62,9 @@ docker-compose up --build
 - In the **Permissions options** step, click the **Attach policies directly**, and grant this user the following permissions:
 
   - AWSLambda_FullAccess
+  - AmazonS3FullAccess
+  - AmazonEC2ContainerRegistryFullAccess
+  - AmazonECS_FullAccess
 
 - Click the user once it's created, then click the **Create access key** under the **Summary** section.
 
@@ -87,12 +80,7 @@ docker-compose up --build
 
 - Add the following secrets under **Repository secrets**:
 
-  - **DOCKERHUB_USERNAME**: The Docker Hub username
-
-  - **DOCKERHUB_ACCESS_TOKEN**: The created access token from previous step
-
   - **AWS_ACCESS_KEY_ID**: from AWS setup
-
   - **AWS_SECRET_ACCESS_KEY**: from AWS setup
 
 ### AWS Lambda Setup
@@ -129,3 +117,41 @@ docker-compose up --build
   - Integration target: Lambda function name
 
 - After the API Gateway gets created, click the API name on the left sidebar to get the API URL.
+
+### AWS ECR (Elastic Container Registry) Setup
+
+- Login the AWS and go to the **ECR**.
+
+- Click on the **Create repository** to create a new container repository and add a **Repository name**.
+
+### AWS ECS (Elastic Container Service) Setup
+
+- Login the AWS and go to the **ECS**.
+
+- Click **Create cluster**:
+
+  - Pick the **Amazon EC2 instance** infrastructure.
+  - Set the Operating system to **Amazon Linux 2**.
+  - Pick a right instance type. E.g. **t2.micro**, the AWS free tier EC2 instance.
+  - Set both the Minimum Desired capacity and Maximum Desired capacity to **1**.
+  - Turn on the **Auto-assign public IP**.
+
+- Once the cluster gets created, go to the **Task definitions** tab then create a new task definition.
+
+  - Under the Infrastructure requirements:
+    - Set the Launch type to **Amazon EC2 instances** only.
+    - Set the Task size CPU to **0.25 vCPU**, Memory to **0.5 GB**.
+  - Under the Container - 1
+    - Copy the image URI from **ECR** page, then set it to the ECR image URI.
+    - Add Port mappings rules to ensure it supports port number **80**.
+
+- Navigate to the cluster and go to the **Services** table.
+
+  - Create a new service.
+  - Under the Deployment configuration, set the Family to the task definition from previous step.
+  - Make sure the **Desired tasks** was set to **1**. It's the number of instances of the containers to run.
+
+- Go to **EC2**, then go to **Security Groups**. Edit the inbound rules and add following rules:
+
+  - Type: HTTP. Source: Custom, 0.0.0.0/0
+  - Type: HTTPS. Source: Custom, 0.0.0.0/0

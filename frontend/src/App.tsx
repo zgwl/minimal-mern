@@ -11,7 +11,8 @@ function App() {
         setMessage(data);
       })
       .catch((error) => {
-        console.error("There was an error!", error);
+        console.error("Error from the backend: ", error);
+        setMessage("Error fetching data from the backend");
       });
   }, []);
 
